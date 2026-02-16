@@ -21,6 +21,8 @@ export function useFlagGame() {
   const correctSound = new Audio('/correct.mp3')
   const wrongSound = new Audio('/wrong.mp3')
 
+  const gameOver = ref(false)
+
   function shuffle(array) {
     return [...array].sort(() => Math.random() - 0.5)
   }
@@ -84,8 +86,7 @@ export function useFlagGame() {
         highScore.value = score.value
         localStorage.setItem('flagHighScore', score.value)
       }
-      alert(`Game Over! Final score: ${score.value}`)
-      resetGame()
+      gameOver.value = true
     }
   }
 
@@ -93,6 +94,7 @@ export function useFlagGame() {
     score.value = 0
     streak.value = 0
     round.value = 1
+    gameOver.value = false
     startRound()
   }
 
@@ -114,9 +116,11 @@ export function useFlagGame() {
     showResult,
     timeLeft,
     progressPercent,
+    gameOver,
     isCorrect,
     startRound,
     selectAnswer,
     nextRound,
+    resetGame
   }
 }
